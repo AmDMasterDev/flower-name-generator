@@ -40,7 +40,7 @@
       #imageStack {
         position: relative;
         width: 100vw;
-        height: 30vh; /* Scales to 30% of the viewport height */
+        height: 50vh; /* Scales to 30% of the viewport height */
         margin-top: 20px;
         display: flex;
         justify-content: center;
@@ -55,6 +55,7 @@
       input[type="text"],
       button {
         padding: 10px;
+        margin-top: 16px;
         font-size: 16px;
       }
       input[type="text"] {
@@ -79,7 +80,7 @@
           autocomplete="off"
           spellcheck="false"
         />
-        <button onclick="displayImages()">Display Images</button>
+        <button onclick="displayImages()">Generate Flowers</button>
       </div>
       <div id="imageStack">
         <!-- <img src="images/a.png" alt="Test image" /> -->
@@ -95,20 +96,40 @@
 
         const usedIndices = new Set(); // To keep track of used z-index values
         const letterCounts = {}; // To track occurrences of each letter
+        let validImages = 0; // To count valid images
 
+        // First pass to count valid images
         for (let char of name) {
           if (char >= "a" && char <= "z") {
-            letterCounts[char] = (letterCounts[char] || 0) + 1; // Increment letter count
-
-            // Continue to next character if this letter has been used more than twice
-            if (letterCounts[char] > 2) {
-              continue;
+            letterCounts[char] = (letterCounts[char] || 0) + 1;
+            if (letterCounts[char] <= 2) {
+              validImages++;
             }
+          }
+        }
+
+        const maxAngle = 10; // Maximum angle on one side for rotation
+        const angleIncrement = (maxAngle * 2) / (validImages - 1 || 1); // Calculate angle increment
+        let currentAngle = -maxAngle; // Start from the negative maximum angle
+
+        const maxSpacing = 30; // Maximum spacing percentage on one side
+        const spacingIncrement = maxSpacing / (validImages - 1 || 1); // Calculate spacing increment
+        let currentPosition = -maxSpacing; // Start from the negative maximum spacing
+
+        // Reset for actual image processing
+        for (let char in letterCounts) {
+          letterCounts[char] = 0;
+        }
+
+        // Second pass to position and create images
+        for (let char of name) {
+          if (char >= "a" && char <= "z") {
+            letterCounts[char]++;
+            if (letterCounts[char] > 2) continue; // Skip if more than two occurrences
 
             const img = document.createElement("img");
             img.src = "images/" + char + ".png"; // Ensure path is correct
 
-            // Generate a random z-index for each image, ensuring no repeats
             let zIndex;
             do {
               zIndex = Math.floor(Math.random() * 100); // Random z-index from 0 to 99
@@ -118,17 +139,31 @@
             img.style.zIndex = zIndex;
 
             // Flip image horizontally if this is the second occurrence of the letter
-            if (letterCounts[char] === 2) {
-              img.style.transform = "scaleX(-1)";
-            }
+            // if (letterCounts[char] === 2) {
+            //   img.style.transform = "scaleX(-1)";
+            // }
 
-            // Randomly adjust the x position slightly, within 45% to 55%
-            const xOffset = (Math.random() * 6 + 14).toFixed(2); // Random between 45% to 55%
-            img.style.left = xOffset + "%";
+            img.style.position = "absolute";
+            img.style.transform += ` rotate(${currentAngle}deg)`;
+            img.style.transformOrigin = "bottom center"; // Set the rotation origin at the bottom center
+            img.style.left = `calc(15% + ${currentPosition}%)`; // Calculate left position with spacing
+            currentAngle += angleIncrement; // Increment the angle for the next image
+            currentPosition += spacingIncrement; // Increment the position for the next image
 
             imageStack.appendChild(img);
           }
         }
+
+        // Add a bow image at the base
+        const bow = document.createElement("img");
+        bow.src = "images/bow.png"; // Ensure path is correct for the bow image
+        bow.style.position = "absolute";
+        bow.style.bottom = "0"; // Position at the bottom of the image stack
+        bow.style.left = "50%"; // Center horizontally
+        bow.style.transform = "translate(-50%, 15%)"; // Adjust for center alignment
+        bow.style.zIndex = "200"; // Ensure the bow is on top of the flowers if needed
+        imageStack.appendChild(bow);
+
         controls.className += " hide"; // Hide the controls after displaying images
       }
     </script>
