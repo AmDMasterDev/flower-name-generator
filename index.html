@@ -82,9 +82,7 @@
         />
         <button onclick="displayImages()">Generate Flowers</button>
       </div>
-      <div id="imageStack">
-        <!-- <img src="images/a.png" alt="Test image" /> -->
-      </div>
+      <div id="imageStack"></div>
     </div>
 
     <script>
@@ -112,7 +110,7 @@
         const angleIncrement = (maxAngle * 2) / (validImages - 1 || 1); // Calculate angle increment
         let currentAngle = -maxAngle; // Start from the negative maximum angle
 
-        const maxSpacing = 30; // Maximum spacing percentage on one side
+        const maxSpacing = 25; // Maximum spacing percentage on one side
         const spacingIncrement = maxSpacing / (validImages - 1 || 1); // Calculate spacing increment
         let currentPosition = -maxSpacing; // Start from the negative maximum spacing
 
@@ -146,7 +144,7 @@
             img.style.position = "absolute";
             img.style.transform += ` rotate(${currentAngle}deg)`;
             img.style.transformOrigin = "bottom center"; // Set the rotation origin at the bottom center
-            img.style.left = `calc(15% + ${currentPosition}%)`; // Calculate left position with spacing
+            img.style.left = `calc(${maxSpacing / 2}% + ${currentPosition}%)`; // Calculate left position with spacing
             currentAngle += angleIncrement; // Increment the angle for the next image
             currentPosition += spacingIncrement; // Increment the position for the next image
 
