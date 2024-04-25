@@ -184,17 +184,21 @@
 
       function captureScreen() {
         document.getElementById("downloadBtn").style.display = "none";
-        html2canvas(document.body).then((canvas) => {
-          const name = document.getElementById("nameInput").value.toLowerCase();
-          // Create an image
-          const image = canvas.toDataURL("image/png", 1.0); // 1.0 indicates image quality
+        setTimeout(() => {
+          html2canvas(document.body).then((canvas) => {
+            const name = document
+              .getElementById("nameInput")
+              .value.toLowerCase();
+            // Create an image
+            const image = canvas.toDataURL("image/png", 1.0); // 1.0 indicates image quality
 
-          // Create a link to download the image
-          const link = document.createElement("a");
-          link.download = name + "-flower-bouquet.png"; // Set the filename for the download
-          link.href = image; // Link to the image data
-          link.click(); // Simulate a click to download
-        });
+            // Create a link to download the image
+            const link = document.createElement("a");
+            link.download = name + "-flower-bouquet.png"; // Set the filename for the download
+            link.href = image; // Link to the image data
+            link.click(); // Simulate a click to download
+          });
+        }, 500);
       }
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.3/html2canvas.min.js"></script>
