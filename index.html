@@ -7,13 +7,16 @@
     <style>
       * {
         box-sizing: border-box;
+        margin: 0;
+        padding: 0;
         overflow: hidden;
       }
       body {
+        overflow: hidden;
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100vh;
+        height: 120vh;
         width: 100vw;
         margin: 0;
         background-color: #f4f4f4; /* Fallback color */
@@ -34,6 +37,7 @@
         background: inherit; /* Inherit the background from the body */
         filter: blur(0.8px);
         z-index: -1; /* Position behind the content */
+        overflow: hidden;
       }
 
       #container {
@@ -41,7 +45,6 @@
         text-align: center;
       }
       #imageStack {
-        overflow: hidden;
         position: relative;
         width: 100vw;
         height: 60vh;
@@ -49,6 +52,7 @@
         display: flex;
         align-items: center;
         justify-items: center;
+        overflow: hidden;
       }
       img {
         position: absolute; /* Makes images responsive within their container */
@@ -84,10 +88,10 @@
         />
         <button onclick="displayImages()">Generate Flowers</button>
       </div>
+      <div id="imageStack"></div>
       <button id="downloadBtn" onclick="captureScreen()" style="display: none">
         Download Image
       </button>
-      <div id="imageStack"></div>
     </div>
 
     <script>
