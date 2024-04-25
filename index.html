@@ -151,9 +151,9 @@
             img.style.zIndex = zIndex;
 
             img.style.position = "absolute";
-            img.style.transform += ` rotate(${currentAngle}deg)`;
+            img.style.transform += `translateX(-50%) rotate(${currentAngle}deg)`;
             img.style.transformOrigin = "bottom center"; // Set the rotation origin at the bottom center
-            img.style.left = `calc(${maxSpacing * 2}% + ${currentPosition}%)`; // Calculate left position with spacing
+            img.style.left = `calc(50% + ${currentPosition}vw)`; // Calculate left position with spacing
             img.style.bottom = `${
               calculateVerticalOffset(currentPosition) + 20
             }%`; // Adjust vertical position
