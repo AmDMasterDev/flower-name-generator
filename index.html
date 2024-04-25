@@ -110,9 +110,18 @@
         const angleIncrement = (maxAngle * 2) / (validImages - 1 || 1); // Calculate angle increment
         let currentAngle = -maxAngle; // Start from the negative maximum angle
 
-        const maxSpacing = 25; // Maximum spacing percentage on one side
-        const spacingIncrement = maxSpacing / (validImages - 1 || 1); // Calculate spacing increment
+        const maxSpacing = validImages; // Maximum spacing percentage on one side
+        const spacingIncrement = (maxSpacing * 2) / (validImages - 1 || 1); // Calculate spacing increment
         let currentPosition = -maxSpacing; // Start from the negative maximum spacing
+
+        const maxYOffset = validImages; // Max vertical offset in percentage
+        // Function to calculate vertical offset based on current horizontal position
+        function calculateVerticalOffset(position) {
+          // Normalize position to range [-1, 1]
+          const x = (2 * (position + maxSpacing)) / (2 * maxSpacing) - 1;
+          // Parabolic curve: y = -a*x^2 + k, where a = maxYOffset and k = maxYOffset
+          return -maxYOffset * x * x + maxYOffset;
+        }
 
         // Reset for actual image processing
         for (let char in letterCounts) {
@@ -144,7 +153,9 @@
             img.style.position = "absolute";
             img.style.transform += ` rotate(${currentAngle}deg)`;
             img.style.transformOrigin = "bottom center"; // Set the rotation origin at the bottom center
-            img.style.left = `calc(${maxSpacing / 2}% + ${currentPosition}%)`; // Calculate left position with spacing
+            img.style.left = `calc(${maxSpacing / 6}% + ${currentPosition}%)`; // Calculate left position with spacing
+            img.style.bottom = `${calculateVerticalOffset(currentPosition)}%`; // Adjust vertical position
+
             currentAngle += angleIncrement; // Increment the angle for the next image
             currentPosition += spacingIncrement; // Increment the position for the next image
 
@@ -154,11 +165,11 @@
 
         // Add a bow image at the base
         const bow = document.createElement("img");
-        bow.src = "images/bow.png"; // Ensure path is correct for the bow image
+        bow.src = "images/bow1.png"; // Ensure path is correct for the bow image
         bow.style.position = "absolute";
         bow.style.bottom = "0"; // Position at the bottom of the image stack
         bow.style.left = "50%"; // Center horizontally
-        bow.style.transform = "translate(-50%, 15%)"; // Adjust for center alignment
+        bow.style.transform = "translate(-50%, 20%)"; // Adjust for center alignment
         bow.style.zIndex = "200"; // Ensure the bow is on top of the flowers if needed
         imageStack.appendChild(bow);
 
