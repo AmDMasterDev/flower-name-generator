@@ -3,13 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Image Stack</title>
+    <title>Name Flower Bouquet</title>
     <style>
+      * {
+        box-sizing: border-box;
+        overflow: hidden;
+      }
       body {
         display: flex;
         justify-content: center;
         align-items: center;
         height: 100vh;
+        width: 100vw;
         margin: 0;
         background-color: #f4f4f4; /* Fallback color */
         background-image: url("images/background.jpg"); /* Path to your background image */
@@ -17,7 +22,6 @@
         background-position: center; /* Center the background image */
         font-family: Arial, sans-serif;
         position: relative; /* Needed for the pseudo-element to position correctly */
-        overflow: hidden; /* Ensures no scrollbars appear due to the pseudo-element */
       }
 
       body::before {
@@ -27,20 +31,24 @@
         left: 0;
         right: 0;
         bottom: 0;
+        /* width: 100vw; */
         background: inherit; /* Inherit the background from the body */
         filter: blur(0.8px);
         z-index: -1; /* Position behind the content */
       }
 
       #container {
-        position: absolute;
-        bottom: 25vh;
+        position: relative;
+        margin-top: 10rem;
+        padding-bottom: 10rem;
         text-align: center;
       }
       #imageStack {
+        overflow: clip;
+        overflow-clip-margin: 10rem;
         position: relative;
         width: 100vw;
-        height: 50vh; /* Scales to 30% of the viewport height */
+        height: 40vh; /* Scales to 30% of the viewport height */
         margin-top: 20px;
         display: flex;
         justify-content: center;
@@ -82,7 +90,13 @@
         />
         <button onclick="displayImages()">Generate Flowers</button>
       </div>
-      <div id="imageStack"></div>
+      <button id="downloadBtn" onclick="captureScreen()" style="display: none">
+        Download Image
+      </button>
+      <div
+        id="imageStack"
+        style="overflow: clip; overflow-clip-margin: 10rem"
+      ></div>
     </div>
 
     <script>
@@ -106,11 +120,11 @@
           }
         }
 
-        const maxAngle = 10; // Maximum angle on one side for rotation
+        const maxAngle = validImages * 3; // Maximum angle on one side for rotation
         const angleIncrement = (maxAngle * 2) / (validImages - 1 || 1); // Calculate angle increment
         let currentAngle = -maxAngle; // Start from the negative maximum angle
 
-        const maxSpacing = validImages; // Maximum spacing percentage on one side
+        const maxSpacing = 2; // Maximum spacing percentage on one side
         const spacingIncrement = (maxSpacing * 2) / (validImages - 1 || 1); // Calculate spacing increment
         let currentPosition = -maxSpacing; // Start from the negative maximum spacing
 
@@ -135,7 +149,7 @@
             if (letterCounts[char] > 2) continue; // Skip if more than two occurrences
 
             const img = document.createElement("img");
-            img.src = "images/" + char + ".png"; // Ensure path is correct
+            img.src = "images/style2/" + char + ".png"; // Ensure path is correct
 
             let zIndex;
             do {
@@ -153,7 +167,7 @@
             img.style.position = "absolute";
             img.style.transform += ` rotate(${currentAngle}deg)`;
             img.style.transformOrigin = "bottom center"; // Set the rotation origin at the bottom center
-            img.style.left = `calc(${maxSpacing / 6}% + ${currentPosition}%)`; // Calculate left position with spacing
+            img.style.left = `calc(${maxSpacing * 3.2}% + ${currentPosition}%)`; // Calculate left position with spacing
             img.style.bottom = `${calculateVerticalOffset(currentPosition)}%`; // Adjust vertical position
 
             currentAngle += angleIncrement; // Increment the angle for the next image
@@ -164,17 +178,37 @@
         }
 
         // Add a bow image at the base
+        const container = document.getElementById("container");
         const bow = document.createElement("img");
-        bow.src = "images/bow1.png"; // Ensure path is correct for the bow image
+        bow.src = "images/style2/bow.png"; // Ensure path is correct for the bow image
         bow.style.position = "absolute";
         bow.style.bottom = "0"; // Position at the bottom of the image stack
         bow.style.left = "50%"; // Center horizontally
-        bow.style.transform = "translate(-50%, 20%)"; // Adjust for center alignment
+        bow.style.transform = "translate(-50%, -15%)"; // Adjust for center alignment
         bow.style.zIndex = "200"; // Ensure the bow is on top of the flowers if needed
-        imageStack.appendChild(bow);
+        container.appendChild(bow);
 
         controls.className += " hide"; // Hide the controls after displaying images
+
+        // Show the download button
+        document.getElementById("downloadBtn").style.display = "inline"; // Change 'block' to 'inline' if preferred
+      }
+
+      function captureScreen() {
+        document.getElementById("downloadBtn").style.display = "none";
+        html2canvas(document.body).then((canvas) => {
+          const name = document.getElementById("nameInput").value.toLowerCase();
+          // Create an image
+          const image = canvas.toDataURL("image/png", 1.0); // 1.0 indicates image quality
+
+          // Create a link to download the image
+          const link = document.createElement("a");
+          link.download = name + "-flower-bouquet.png"; // Set the filename for the download
+          link.href = image; // Link to the image data
+          link.click(); // Simulate a click to download
+        });
       }
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.3/html2canvas.min.js"></script>
   </body>
 </html>
