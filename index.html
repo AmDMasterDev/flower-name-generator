@@ -16,39 +16,40 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 120vh;
+        height: 110vh;
         width: 100vw;
         margin: 0;
         background-color: #f4f4f4; /* Fallback color */
-        background-image: url("images/background.jpg"); /* Path to your background image */
-        background-size: cover; /* Cover the entire viewport */
-        background-position: center; /* Center the background image */
         font-family: Arial, sans-serif;
         position: relative; /* Needed for the pseudo-element to position correctly */
       }
 
-      body::before {
-        content: ""; /* Pseudo-element requires content to display */
+      /* body::before {
+        content: "";
         position: absolute;
         top: 0;
         left: 0;
         right: 0;
         bottom: 0;
-        background: inherit; /* Inherit the background from the body */
+        background: inherit; 
         filter: blur(0.8px);
-        z-index: -1; /* Position behind the content */
+        z-index: -1; 
         overflow: hidden;
-      }
+      } */
 
       #container {
+        background-image: url("images/background.jpg"); /* Path to your background image */
+        background-position: center; /* Center the background image */
+        background-size: cover; /* Cover the entire viewport */
         position: relative;
         text-align: center;
+        height: 100%;
       }
       #imageStack {
         position: relative;
         width: 100vw;
         height: 60vh;
-        margin-top: 20px;
+        margin-top: 50vw;
         display: flex;
         align-items: center;
         justify-items: center;
@@ -69,6 +70,7 @@
         max-width: 300px; /* Maximum width */
       }
       #controls {
+        margin-top: 15rem;
         display: block; /* Initially show controls */
       }
       #controls.hide {
@@ -88,10 +90,10 @@
         />
         <button onclick="displayImages()">Generate Flowers</button>
       </div>
-      <div id="imageStack"></div>
       <button id="downloadBtn" onclick="captureScreen()" style="display: none">
         Download Image
       </button>
+      <div id="imageStack"></div>
     </div>
 
     <script>
@@ -189,7 +191,7 @@
       function captureScreen() {
         document.getElementById("downloadBtn").style.display = "none";
         setTimeout(() => {
-          html2canvas(document.body).then((canvas) => {
+          html2canvas(document.getElementById("container")).then((canvas) => {
             const name = document
               .getElementById("nameInput")
               .value.toLowerCase();
