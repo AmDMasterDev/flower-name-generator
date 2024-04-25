@@ -31,7 +31,6 @@
         left: 0;
         right: 0;
         bottom: 0;
-        /* width: 100vw; */
         background: inherit; /* Inherit the background from the body */
         filter: blur(0.8px);
         z-index: -1; /* Position behind the content */
@@ -39,26 +38,21 @@
 
       #container {
         position: relative;
-        /* margin-top: rem; */
-        padding: 10rem 0 10rem 0;
         text-align: center;
       }
       #imageStack {
-        overflow: clip;
-        overflow-clip-margin: 10rem;
+        overflow: hidden;
         position: relative;
         width: 100vw;
-        height: 40vh; /* Scales to 30% of the viewport height */
+        height: 60vh;
         margin-top: 20px;
         display: flex;
-        justify-content: center;
         align-items: center;
+        justify-items: center;
       }
       img {
-        position: absolute;
-        max-height: 100%;
-        max-width: 100%; /* Makes images responsive within their container */
-        height: auto;
+        position: absolute; /* Makes images responsive within their container */
+        height: 75%;
       }
       input[type="text"],
       button {
@@ -67,7 +61,7 @@
         font-size: 16px;
       }
       input[type="text"] {
-        width: 80%; /* Responsive width */
+        width: 70%; /* Responsive width */
         max-width: 300px; /* Maximum width */
       }
       #controls {
@@ -78,7 +72,7 @@
       }
     </style>
   </head>
-  <body>
+  <body id="body">
     <div id="container">
       <div id="controls">
         <input
@@ -93,10 +87,7 @@
       <button id="downloadBtn" onclick="captureScreen()" style="display: none">
         Download Image
       </button>
-      <div
-        id="imageStack"
-        style="overflow: clip; overflow-clip-margin: 10rem"
-      ></div>
+      <div id="imageStack"></div>
     </div>
 
     <script>
@@ -128,7 +119,7 @@
         const spacingIncrement = (maxSpacing * 2) / (validImages - 1 || 1); // Calculate spacing increment
         let currentPosition = -maxSpacing; // Start from the negative maximum spacing
 
-        const maxYOffset = validImages; // Max vertical offset in percentage
+        const maxYOffset = validImages / 2; // Max vertical offset in percentage
         // Function to calculate vertical offset based on current horizontal position
         function calculateVerticalOffset(position) {
           // Normalize position to range [-1, 1]
@@ -159,16 +150,13 @@
 
             img.style.zIndex = zIndex;
 
-            // Flip image horizontally if this is the second occurrence of the letter
-            // if (letterCounts[char] === 2) {
-            //   img.style.transform = "scaleX(-1)";
-            // }
-
             img.style.position = "absolute";
             img.style.transform += ` rotate(${currentAngle}deg)`;
             img.style.transformOrigin = "bottom center"; // Set the rotation origin at the bottom center
-            img.style.left = `calc(${maxSpacing * 3.2}% + ${currentPosition}%)`; // Calculate left position with spacing
-            img.style.bottom = `${calculateVerticalOffset(currentPosition)}%`; // Adjust vertical position
+            img.style.left = `calc(${maxSpacing * 2}% + ${currentPosition}%)`; // Calculate left position with spacing
+            img.style.bottom = `${
+              calculateVerticalOffset(currentPosition) + 20
+            }%`; // Adjust vertical position
 
             currentAngle += angleIncrement; // Increment the angle for the next image
             currentPosition += spacingIncrement; // Increment the position for the next image
@@ -184,9 +172,9 @@
         bow.style.position = "absolute";
         bow.style.bottom = "0"; // Position at the bottom of the image stack
         bow.style.left = "50%"; // Center horizontally
-        bow.style.transform = "translate(-50%, -15%)"; // Adjust for center alignment
+        bow.style.transform = "translate(-50%, 0%)"; // Adjust for center alignment
         bow.style.zIndex = "200"; // Ensure the bow is on top of the flowers if needed
-        container.appendChild(bow);
+        imageStack.appendChild(bow);
 
         controls.className += " hide"; // Hide the controls after displaying images
 
