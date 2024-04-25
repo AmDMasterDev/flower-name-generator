@@ -31,9 +31,9 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background: inherit; 
+        background: inherit;
         filter: blur(0.8px);
-        z-index: -1; 
+        z-index: -1;
         overflow: hidden;
       } */
 
@@ -70,17 +70,33 @@
         max-width: 300px; /* Maximum width */
       }
       #controls {
-        margin-top: 15rem;
+        /* margin-top: 15rem; */
+        text-align: center;
         display: block; /* Initially show controls */
       }
       #controls.hide {
         display: none; /* Hide controls after use */
+      }
+      #logo {
+        /* display: block;
+        transform: translateX(-50%);
+        left: 50%;
+        top: 0rem;
+        width: 70%;
+        height: auto; */
+        display: block; /* Makes the image a block-level element */
+        position: relative;
+        margin: 0 auto; /* Centers the logo horizontally */
+        max-width: 300px; /* Optionally set a maximum width for the logo */
+        height: auto; /* Maintain aspect ratio */
+        margin-bottom: 10px; /* Space between the logo and the input field */
       }
     </style>
   </head>
   <body id="body">
     <div id="container">
       <div id="controls">
+        <img id="logo" src="images/generator-logo.png" alt="" />
         <input
           type="text"
           id="nameInput"
