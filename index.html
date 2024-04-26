@@ -71,29 +71,28 @@
       }
       #controls {
         text-align: center;
-        display: block;
         height: 100vh;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        align-items: center;
       }
       #controls.hide {
-        display: none; /* Hide controls after use */
+        display: none;
       }
       #logo {
-        display: block; /* Makes the image a block-level element */
+        display: block;
         position: relative;
-        margin: 0 auto; /* Centers the logo horizontally */
-        max-width: 300px; /* Optionally set a maximum width for the logo */
-        height: auto; /* Maintain aspect ratio */
-        margin-bottom: 10px; /* Space between the logo and the input field */
+        margin: 0 auto;
+        max-width: 300px;
+        height: auto;
+        margin-bottom: 10px;
       }
       #footer {
         display: block;
-        transform: translateX(-50%);
-        width: auto; /* Take full width of the container */
-        height: 150px;
+        position: relative;
+        margin: 0 auto;
+        max-width: 300px;
+        height: auto;
       }
     </style>
   </head>
@@ -111,7 +110,8 @@
           />
           <button onclick="displayImages()">Generate Flowers</button>
         </div>
-        <div style="height: 150px; padding-top: 1rem">
+        <div></div>
+        <div>
           <img id="footer" src="images/generator-footer.png" alt="footer" />
         </div>
       </div>
