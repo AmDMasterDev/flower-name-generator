@@ -87,6 +87,9 @@
         height: auto;
         margin-bottom: 10px;
       }
+      #editcontrols > button {
+        display: inline;
+      }
     </style>
   </head>
   <body id="body">
@@ -108,18 +111,10 @@
       </div>
       <div id="editcontrols" style="display: none">
         <button onclick="reloadPage()">New</button>
-        <button
-          id="downloadBtn"
-          onclick="captureScreen()"
-          style="display: inline"
-        >
+        <button id="downloadBtn" onclick="captureScreen()">
           Download Image
         </button>
-        <button
-          id="rearrange"
-          onclick="randomizeFlowerOrder()"
-          style="display: inline"
-        >
+        <button id="rearrange" onclick="randomizeFlowerOrder()">
           Re-arrange
         </button>
       </div>
