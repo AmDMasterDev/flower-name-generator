@@ -161,7 +161,6 @@
         for (let char of name) {
           if (char >= "a" && char <= "z") {
             letterCounts[char]++;
-            // if (letterCounts[char] > 2) continue; // Skip if more than two occurrences
 
             const img = document.createElement("img");
             img.src = "images/style2/" + char + ".png"; // Ensure path is correct
@@ -254,7 +253,8 @@
       }
 
       function redirectToFlowerMap() {
-        window.location.href += "flower-map.html";
+        window.location.href =
+          "https://amdmasterdev.github.io/flower-name-generator/flower-map.html";
       }
 
       function toggleButton() {

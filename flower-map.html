@@ -95,8 +95,8 @@
           img.classList.add("flower-item");
           img.alt = `Flower ${char.toUpperCase()}`;
 
-          const randomRotation = Math.floor(Math.random() * 21) - 10; // Random rotation -10 to 10 degrees
-          img.style.transform = `rotate(${randomRotation}deg)`;
+          const randomRotation = Math.floor(Math.random() * 13) - 7;
+          img.style.transform = `translateX(-10%) rotate(${randomRotation}deg)`;
 
           // Create a label for the flower
           const label = document.createElement("span");
