@@ -70,20 +70,18 @@
         max-width: 300px; /* Maximum width */
       }
       #controls {
-        /* margin-top: 15rem; */
         text-align: center;
-        display: block; /* Initially show controls */
+        display: block;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
       }
       #controls.hide {
         display: none; /* Hide controls after use */
       }
       #logo {
-        /* display: block;
-        transform: translateX(-50%);
-        left: 50%;
-        top: 0rem;
-        width: 70%;
-        height: auto; */
         display: block; /* Makes the image a block-level element */
         position: relative;
         margin: 0 auto; /* Centers the logo horizontally */
@@ -91,20 +89,31 @@
         height: auto; /* Maintain aspect ratio */
         margin-bottom: 10px; /* Space between the logo and the input field */
       }
+      #footer {
+        display: block;
+        transform: translateX(-50%);
+        width: auto; /* Take full width of the container */
+        height: 150px;
+      }
     </style>
   </head>
   <body id="body">
     <div id="container">
       <div id="controls">
-        <img id="logo" src="images/generator-logo.png" alt="" />
-        <input
-          type="text"
-          id="nameInput"
-          placeholder="Enter a name"
-          autocomplete="off"
-          spellcheck="false"
-        />
-        <button onclick="displayImages()">Generate Flowers</button>
+        <div>
+          <img id="logo" src="images/generator-logo.png" alt="" />
+          <input
+            type="text"
+            id="nameInput"
+            placeholder="Enter a name"
+            autocomplete="off"
+            spellcheck="false"
+          />
+          <button onclick="displayImages()">Generate Flowers</button>
+        </div>
+        <div style="height: 150px; padding-top: 1rem">
+          <img id="footer" src="images/generator-footer.png" alt="footer" />
+        </div>
       </div>
       <div id="editcontrols" style="display: none">
         <button onclick="reloadPage()">New</button>
