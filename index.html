@@ -71,6 +71,22 @@
         width: 70%; /* Responsive width */
         max-width: 300px; /* Maximum width */
       }
+      label {
+        display: block;
+        font-weight: 600;
+        margin-top: 20px;
+        font-size: 16px; /* Adjust font size as needed */
+        color: #191919; /* Adjust color as needed for visibility */
+        text-shadow: 0 0 2px #4a4a4a9b;
+      }
+
+      input[type="file"] {
+        display: block;
+        padding: 10px;
+        font-size: 16px;
+        justify-content: center;
+      }
+
       #controls {
         display: block;
         text-align: center;
@@ -105,6 +121,10 @@
             spellcheck="false"
             oninput="toggleButton()"
           />
+          <label for="backgroundInput"
+            >Upload a custom background (optional):</label
+          >
+          <input type="file" id="backgroundInput" accept="image/*" />
           <button id="generateButton" onclick="displayImages()" disabled>
             Generate Flowers
           </button>
@@ -128,8 +148,23 @@
       function displayImages() {
         const name = document.getElementById("nameInput").value.toLowerCase();
         const imageStack = document.getElementById("imageStack");
+        const backgroundImage = document.getElementById("container");
         const controls = document.getElementById("controls");
         imageStack.innerHTML = ""; // Clear previous images
+
+        if (backgroundInput.files && backgroundInput.files[0]) {
+          const reader = new FileReader();
+
+          reader.onload = function (e) {
+            // Set the loaded image as the background of the backgroundImage
+            backgroundImage.style.backgroundImage = `url(${e.target.result})`;
+            backgroundImage.style.backgroundSize = "cover";
+            backgroundImage.style.backgroundPosition = "center";
+            backgroundImage.style.backgroundRepeat = "no-repeat";
+          };
+
+          reader.readAsDataURL(backgroundInput.files[0]);
+        }
 
         const usedIndices = new Set(); // To keep track of used z-index values
         const letterCounts = {}; // To track occurrences of each letter
