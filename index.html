@@ -73,16 +73,16 @@
       }
       label {
         display: block;
-        font-weight: 600;
-        margin-top: 20px;
-        font-size: 16px; /* Adjust font size as needed */
-        color: #191919; /* Adjust color as needed for visibility */
-        text-shadow: 0 0 2px #4a4a4a9b;
+        font-size: 12px;
+        padding: 4px;
+        color: #000000a0;
+        font-style: italic;
+        font-weight: bold;
       }
 
       input[type="file"] {
         display: block;
-        padding: 10px;
+        margin-top: 18px;
         font-size: 16px;
         justify-content: center;
       }
@@ -105,11 +105,21 @@
       }
       #editcontrols > button {
         display: inline;
+        position: relative;
+        z-index: 5;
+      }
+      #blur {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        backdrop-filter: blur(1.2px) brightness(95%);
       }
     </style>
   </head>
   <body id="body">
     <div id="container">
+      <div id="blur"></div>
       <div id="controls">
         <div style="display: flex; flex-direction: column; align-items: center">
           <img id="logo" src="images/generator-logo.png" alt="" />
@@ -121,10 +131,10 @@
             spellcheck="false"
             oninput="toggleButton()"
           />
+          <input type="file" id="backgroundInput" accept="image/*" />
           <label for="backgroundInput"
             >Upload a custom background (optional):</label
           >
-          <input type="file" id="backgroundInput" accept="image/*" />
           <button id="generateButton" onclick="displayImages()" disabled>
             Generate Flowers
           </button>
@@ -150,6 +160,7 @@
         const imageStack = document.getElementById("imageStack");
         const backgroundImage = document.getElementById("container");
         const controls = document.getElementById("controls");
+        const blur = document.getElementById("blur");
         imageStack.innerHTML = ""; // Clear previous images
 
         if (backgroundInput.files && backgroundInput.files[0]) {
@@ -163,6 +174,7 @@
             backgroundImage.style.backgroundRepeat = "no-repeat";
           };
 
+          blur.style.zIndex = 0;
           reader.readAsDataURL(backgroundInput.files[0]);
         }
 
